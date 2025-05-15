@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+ <html xmlns:th="http://www.thymeleaf.org">
+ 
+    <head>
+        <div th:insert="fragment :: bootstrapCss"></div>
+        <title>Dettaglio Ticket</title>
+    </head>
+
+    <body>
+        <div class="container" th:object="${ticket}">
+            <div th:insert="fragment :: navbar"></div>
+
+            <h1 class="text-center my-3 text-danger">Dettagli ticket</h1>
+            <div class="row justify-content-center">
+                <div class="col-6">
+                    <dl class="fs-4">
+                        <dt>ID #</dt>
+                        <dd th:text="*{id}"></dd>
+                        <dt>Titolo</dt>
+                        <dd th:text="*{title}"></dd>
+                        <!--Mostra la descrizione soltanto se presente-->
+                        <th:block th:if="*{description} != null and !*{description.isEmpty()}">
+                            <dt>Descrizione</dt>
+                            <dd th:text="*{description}"></dd>
+                        </th:block>
+                        <dt>Categoria</dt>
+                        <dd th:text="*{category.name}"></dd>
+                        <dt>Stato Ticket</dt>
+                        <dd th:text="*{ticketStatus}"></dd>
+                        <dt>Operatore</dt>
+                        <dd th:text="*{user.name}"></dd>
+                    </dl>
+                </div>
+                <!--todo  AGGIUNGERE NOTE-->
+                <div class="col-4">
+
+                </div>
+
+            </div>
+        </div>
+    </body>
+ </html>

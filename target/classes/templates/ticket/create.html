@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+ <html xmlns:th="http://www.thymeleaf.org">
+ 
+    <head>
+        <div th:insert="fragment :: bootstrapCss"></div>
+        <title>New Ticket</title>
+    </head>
+
+    <body>
+        <div class="container">
+
+            <div th:insert="fragment :: navbar"></div>
+
+            <h1 class="text-center my-3 text-danger">Aggiungi un nuovo ticket</h1>
+
+            <form id="ticket-form" th:object="${ticket}" th:action="@{/ticket/create}" method="post" class="mx-auto col-8 text-center">
+                <div class="mb-3">
+                    <label for="title" class="form-label fw-bold fs-5">Titolo</label>
+                    <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-invalid">
+                    <ul th:if="${#fields.hasErrors('title')}">
+                        <li th:each="err : ${#fields.errors('title')}" class="text-danger text-start" th:text="${err}"></li>
+                    </ul>
+                </div>
+
+                <div class="mb-3">
+                    <label for="description" class="form-label fw-bold fs-5">Descrizione</label>
+                    <input type="text" class="form-control" id="description" th:field="*{description}" th:errorClass="is-invalid">
+                </div>
+
+                <div class="mb-3">
+                    <label for="category" class="form-label fw-bold fs-5">Categoria</label>
+                    <select class="form-select" id="category" th:field="*{category}" th:errorClass="is-invalid">
+                        <option value="">Seleziona una categoria</option>
+                        <option th:each="cat : ${categories}"
+                                th:value="${cat.id}"
+                                th:text="${cat.name}">
+                        </option>
+                    </select>
+                    <ul th:if="${#fields.hasErrors('category')}">
+                        <li th:each="err : ${#fields.errors('category')}" class="text-danger text-start" th:text="${err}"></li>
+                    </ul>
+                </div>
+
+                <div class="mb-3">
+                    <label for="ticketStatus" class="form-label fw-bold fs-5">Stato del Ticket</label><br>
+                    <input type="radio" th:field="*{ticketStatus}" value="NEW" id="status1" 
+                        th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">
+                        <!--espressione ternaria. In thymeleaf dove la condizione falsa può essere omessa-->
+                    <label for="status1">New</label>
+                    <input type="radio" th:field="*{ticketStatus}" value="IN_PROGRESS" id="status2"
+                        th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">
+                    <label for="status2">In progress</label>
+                    <input type="radio" th:field="*{ticketStatus}" value="CLOSED" id="status3"
+                        th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">
+                    <label for="status3">Closed</label>
+                    <!-- Gestione dell'errore non più necessaria, impostando un radio di default
+                        <ul th:if="${#fields.hasErrors('ticketStatus')}">
+                            <li th:each="err : ${#fields.errors('ticketStatus')}" class="text-danger text-start" th:text="${err}"></li>
+                        </ul>
+                    -->
+                </div>
+
+                <div class="mb-3">
+                    <label for="user" class="form-label fw-bold fs-5">Assegna a utente</label><br>
+                    <div th:each="u : ${users}" class="form-check form-check-inline">
+                        <input type="radio" th:field="*{user}" th:value="${u.id}" th:id="${'user_' + u.id}" class="form-check-input">
+                        <label th:for="${'user_' + u.id}" th:text="${u.name}" class="form-check-label"></label>
+                    </div>
+                    <ul th:if="${#fields.hasErrors('user')}">
+                            <li th:each="err : ${#fields.errors('user')}" class="text-danger text-start" th:text="${err}"></li>
+                    </ul>
+                </div>
+
+                <div class="d-flex justify-content-center gap-3">
+                    <button type="submit" class="btn btn-success">Aggiungi</button>
+                    <a class="btn btn-danger" th:href="@{/ticket}">Annulla</a>
+                </div>
+            </form>
+
+        </div>
+        <div th:insert="fragment :: bootstrapJS"></div>
+
+    </body>
+ </html>
