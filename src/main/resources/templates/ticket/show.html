@@ -49,13 +49,17 @@
                         </div>
                     </div>
                     
-                    <!--todo CONTENUTO NOTE-->
-                    <!--<div th:unless="${list.isEmpty()}">
-                        .
-                        .
-                        .
-                        .
-                    </div>-->
+                    <div th:unless="${#lists.isEmpty(ticket.note)}">
+                        <div class="card mb-3" th:each="nota : ${ticket.note}">
+                            <div class="card-body">
+                                <p class="card-text" th:text="${nota.text}">Testo della nota</p>
+                                <p class="card-subtitle text-muted">
+                                    Inserita da <span class="fw-bold" th:text="${nota.user.username}">Utente</span>
+                                    il <span th:text="${#temporals.format(nota.noteDate, 'dd/MM/yyyy')}">Data</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>

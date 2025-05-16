@@ -15,7 +15,6 @@
             <form id="note-form" th:object="${note}" th:action="@{/ticket/note}" method="post" class="mx-auto col-8 text-center">
                 
                 <input type="hidden" th:field="*{ticket.id}"/>
-                <input type="hidden" th:field="*{user.id}"/>
                 <input type="hidden" th:field="*{noteDate}" />
                 
                 <div class="mb-3">
