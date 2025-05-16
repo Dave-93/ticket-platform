@@ -31,12 +31,36 @@
                         <dd th:text="*{user.name}"></dd>
                     </dl>
                 </div>
-                <!--todo  AGGIUNGERE NOTE-->
-                <div class="col-4">
-
+                
+                <div class="col-4 ">
+                    <div class="text-center">
+                        <a class="btn btn-primary mb-3" th:href="@{|/ticket/${ticket.id}/note|}">
+                            Aggiungi Nota
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                            </svg>
+                        </a>
+                    </div>
+                    
+                    <div th:if="${#lists.isEmpty(ticket.note)}">
+                        <div class="col-6 mx-auto alert alert-danger">
+                            Non è presente nessuna nota!
+                        </div>
+                    </div>
+                    
+                    <!--todo CONTENUTO NOTE-->
+                    <!--<div th:unless="${list.isEmpty()}">
+                        .
+                        .
+                        .
+                        .
+                    </div>-->
                 </div>
 
             </div>
         </div>
+
+        <div th:insert="fragment :: bootstrapJS"></div>
     </body>
  </html>
