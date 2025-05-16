@@ -59,7 +59,7 @@
                     <label for="user" class="form-label fw-bold fs-5">Assegna a utente</label><br>
                     <div th:each="u : ${users}" class="form-check form-check-inline">
                         <input type="radio" th:field="*{user}" th:value="${u.id}" th:id="${'user_' + u.id}" class="form-check-input">
-                        <label th:for="${'user_' + u.id}" th:text="${u.name}" class="form-check-label"></label>
+                        <label th:for="${'user_' + u.id}" th:text="${u.username}" class="form-check-label"></label>
                     </div>
                     <ul th:if="${#fields.hasErrors('user')}">
                             <li th:each="err : ${#fields.errors('user')}" class="text-danger text-start" th:text="${err}"></li>

@@ -28,10 +28,10 @@
                         <dt>Stato Ticket</dt>
                         <dd th:text="*{ticketStatus}"></dd>
                         <dt>Operatore</dt>
-                        <dd th:text="*{user.name}"></dd>
+                        <dd th:text="*{user.username}"></dd>
                     </dl>
                 </div>
-                
+
                 <div class="col-4 ">
                     <div class="text-center">
                         <a class="btn btn-primary mb-3" th:href="@{|/ticket/${ticket.id}/note|}">

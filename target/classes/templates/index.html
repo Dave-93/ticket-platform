@@ -82,7 +82,7 @@
                             </td>
                             <td th:text="${ticket.ticketStatus}" class="text-center align-middle">
                             </td>
-                            <td th:text="${ticket.user.name}" class="text-center align-middle">
+                            <td th:text="${ticket.user.username}" class="text-center align-middle">
                             </td>
                             <td class="px-1 align-middle text-center">
                                 <a class="btn btn-primary" th:href="@{|/ticket/show/${ticket.id}|}">
