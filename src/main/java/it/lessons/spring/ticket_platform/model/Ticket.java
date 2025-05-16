@@ -28,9 +28,9 @@ public class Ticket {
     @Column(length=1000)
     private String description;
 
-    @NotBlank
+    @NotBlank(message = "Stato del ticket obbligatorio")
     //todo: col Pattern Limito i valori ammessi a quelli stabiliti nel "regexp"
-    @Pattern(regexp = "NEW|IN_PROGRESS|CLOSED"/*, message = "Stato non valido"*/)
+    @Pattern(regexp = "NEW|IN_PROGRESS|CLOSED", message = "Stato non valido")
     @Column(nullable = false, length = 15)
     private String ticketStatus;
 

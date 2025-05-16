@@ -62,7 +62,7 @@ public class TicketController {
         model.addAttribute("ticket", newTicket);
         newTicket.setTicketStatus("NEW");//Imposto la selezione del radio di default
         model.addAttribute("categories", categoryRepository.findAll());//visualizzo la lista
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userRepository.findUsersByRoleName("OPERATOR"));
         return "ticket/create";
     }
     @PostMapping("/create")
@@ -78,7 +78,7 @@ public class TicketController {
         return "redirect:/ticket";
     }
 
-    /*Mostra dettaglio ticket*/
+    /*Dettaglio ticket*/
     @GetMapping("/show/{id}")
     public String show(@PathVariable("id") Integer id, Model model){
         Optional<Ticket> optTicket =  ticketRepository.findById(id);

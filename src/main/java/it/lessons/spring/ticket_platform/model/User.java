@@ -16,7 +16,7 @@ public class User {
     @Id
     private Integer id;
 
-    @NotNull
+    @Column(nullable = false, unique = true)
     private String name;
 
     @NotNull

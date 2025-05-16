@@ -53,11 +53,11 @@
                     <input type="radio" th:field="*{ticketStatus}" value="CLOSED" id="status3"
                         th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">
                     <label for="status3">Closed</label>
-                    <!-- Gestione dell'errore non più necessaria, impostando un radio di default
+                    <!-- Gestione dell'errore non più necessaria, impostando un radio di default-->
                         <ul th:if="${#fields.hasErrors('ticketStatus')}">
                             <li th:each="err : ${#fields.errors('ticketStatus')}" class="text-danger text-start" th:text="${err}"></li>
                         </ul>
-                    -->
+                    
                 </div>
 
                 <input type="hidden" th:field="*{user.id}"/>
