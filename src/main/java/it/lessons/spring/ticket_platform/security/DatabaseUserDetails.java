@@ -17,6 +17,7 @@ public class DatabaseUserDetails implements UserDetails {
     private final String username;
     private final String mail;
     private final String password;
+    private final boolean operatorStatus;
     private final List<GrantedAuthority> authorities;
 
     public DatabaseUserDetails(User user) {
@@ -25,6 +26,7 @@ public class DatabaseUserDetails implements UserDetails {
         this.mail = user.getMail();
         this.password = user.getPassword();
         this.authorities = new ArrayList<>();
+        this.operatorStatus = user.getOperatorStatus();
         for(Role ruolo : user.getRoles()) {
             this.authorities.add(new SimpleGrantedAuthority(ruolo.getName()));
         }
@@ -51,5 +53,9 @@ public class DatabaseUserDetails implements UserDetails {
 
      public Integer getId() {
         return this.id;
+    }
+
+    public boolean getOperatorStatus() {
+        return operatorStatus;
     }
 }

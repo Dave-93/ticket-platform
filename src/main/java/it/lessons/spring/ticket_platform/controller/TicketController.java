@@ -1,9 +1,9 @@
 package it.lessons.spring.ticket_platform.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.lessons.spring.ticket_platform.model.Ticket;
+import it.lessons.spring.ticket_platform.model.User;
 import it.lessons.spring.ticket_platform.repository.CategoryRepository;
 import it.lessons.spring.ticket_platform.repository.TicketRepository;
 import it.lessons.spring.ticket_platform.repository.UserRepository;
@@ -28,16 +29,30 @@ import jakarta.validation.Valid;
 @RequestMapping("/ticket")
 public class TicketController {
 
-    @Autowired
-    private TicketRepository ticketRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-    @Autowired
-    private UserRepository userRepository;
+    private final TicketRepository ticketRepository;
+    private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
+
+    public TicketController(TicketRepository ticketRepository, CategoryRepository categoryRepository, UserRepository userRepository){
+        this.ticketRepository = ticketRepository;
+        this.categoryRepository = categoryRepository;
+        this.userRepository = userRepository;
+    }
 
     @GetMapping
     public String index(Authentication authentication, Model model) {
-        List<Ticket> listaTicket = ticketRepository.findAll();
+        String username = authentication.getName();//Recupero lo username dell’utente loggato
+        List<Ticket>listaTicket = new ArrayList<>();//Creo la lista dei ticket da mostrare.
+        if("admin".equals(username)){
+            listaTicket = ticketRepository.findAll();//L’admin vede tutti i ticket
+        }else{
+            listaTicket = ticketRepository.findByUser_Username(username);//Gli operatori vedono solo i propri
+        }
+        //Cerca nel db un utente con username e se lo trova prende lo stato o non fa nulla 
+        User user = userRepository.findByUsername(username).orElse(null);
+        if(user != null){
+            model.addAttribute("operatorStatus", user.getOperatorStatus());
+        }
         model.addAttribute("list", listaTicket);
         model.addAttribute("name", authentication.getName());
         return "index";
@@ -64,15 +79,14 @@ public class TicketController {
         model.addAttribute("ticket", newTicket);
         newTicket.setTicketStatus("NEW");//Imposto la selezione del radio di default
         model.addAttribute("categories", categoryRepository.findAll());//visualizzo la lista
-        model.addAttribute("users", userRepository.findUsersByRoleName("OPERATOR"));
+        model.addAttribute("users", userRepository.findByOperatorStatusTrueAndRoles_Name("OPERATOR"));//todo visualizzo gli user online
         return "ticket/create";
     }
     @PostMapping("/create")
-    public String newTicket(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model,RedirectAttributes redirectAttributes){
+    public String newTicket(@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model, RedirectAttributes redirectAttributes){
         if(bindingResult.hasErrors()){
-            //con una radio selezionata di defaul non più necessario non va in errore e non serve ricaricarla
             model.addAttribute("categories", categoryRepository.findAll());//Ripopola la lista categorie nel model
-            model.addAttribute("users", userRepository.findAll());//Ripopola la lista degli operatori nel model
+            model.addAttribute("users", userRepository.findByOperatorStatusTrueAndRoles_Name("OPERATOR"));//Ripopola la lista degli operatori nel model
             return "ticket/create";
         }
         ticketRepository.save(formTicket);
@@ -82,13 +96,15 @@ public class TicketController {
 
     /*Dettaglio ticket*/
     @GetMapping("/show/{id}")
-    public String show(@PathVariable("id") Integer id, Model model){
+    public String show(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
         Optional<Ticket> optTicket =  ticketRepository.findById(id);
         if(optTicket.isPresent()){
             model.addAttribute("ticket", ticketRepository.findById(id).get());
+            return "/ticket/show";
+        }else{
+            redirectAttributes.addFlashAttribute("errorMessage", "Ticket non presente");
+            return "redirect:/ticket";
         }
-        return "/ticket/show";
-        //model.addAttribute("errorCause", "Non esiste") //todo gestione errore id mancante
     }
     
     /*Modifica Ticket*/
@@ -96,7 +112,6 @@ public class TicketController {
     public String edit(@PathVariable("id") Integer id, Model model){
         model.addAttribute("ticket", ticketRepository.findById(id).get());
         model.addAttribute("categories", categoryRepository.findAll());//visualizzo la lista
-
         return "/ticket/edit";
     }
     @PostMapping("/edit/{id}")
@@ -109,15 +124,11 @@ public class TicketController {
         //Recupero il ticket esistente per copiare l'user(che non deve essere cambiato in modifica)
         Ticket copyUser = oldTicket.get();
         formTicket.setUser(copyUser.getUser());//riprende l'user esistente
-
         if (bindingResult.hasErrors()) {
-            System.out.println("Errori nel form:");
-            bindingResult.getAllErrors().forEach(err -> System.out.println(err.toString()));
             model.addAttribute("categories", categoryRepository.findAll());
             model.addAttribute("users", userRepository.findAll()); 
             return "/ticket/edit";
         }
-
         ticketRepository.save(formTicket);
         redirectAttributes.addFlashAttribute("successMessage", "Modifica effettuata con successo");
         return "redirect:/ticket";
@@ -128,7 +139,6 @@ public class TicketController {
     public String delete(@PathVariable("id") Integer id, RedirectAttributes redirectAttributes){
         ticketRepository.deleteById(id);  
         redirectAttributes.addFlashAttribute("successMessage", "Ticket eliminato");
-      
         return "redirect:/ticket";
     }
     

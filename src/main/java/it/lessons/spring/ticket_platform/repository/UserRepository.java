@@ -4,16 +4,15 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 
 import it.lessons.spring.ticket_platform.model.User;
 
 public interface UserRepository extends JpaRepository<User, Integer>{
 
-    @Query("SELECT u FROM User u JOIN u.roles r WHERE r.name = :roleName")
-    List<User> findUsersByRoleName(@Param("roleName") String roleName);
-    //Restituisce tutti gli USER che hanno come ruolo il PARAMETRO passato
-
+    //Cerca un utente in base al suo username
     public Optional<User> findByUsername(String username);
+    
+    //Restituisce tutti gli OPERATORI che hanno stato Disponibile
+    List<User> findByOperatorStatusTrueAndRoles_Name(String roleName);
+
 }

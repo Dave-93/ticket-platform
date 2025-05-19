@@ -57,8 +57,6 @@ insert into category (name) values ('Installazione Software'), ('Aggiornamento S
 select * from category; 
 
 show columns from user;
-ALTER TABLE user MODIFY operator_status TINYINT NOT NULL DEFAULT 1;
-* ALTER TABLE user CHANGE name username VARCHAR(255) NOT NULL UNIQUE;
 insert into user (id, name, mail, password) values (1, 'admin', 'administrator@support.it', '{noop}admin'), (2, 'operatore1','operatore1@support.it','{noop}operatore1'), (3, 'operatore2','operatore2@support.it','{noop}operatore2'), (4, 'operatore3','operatore3@support.it','{noop}operatore3');
 select * from user;
 

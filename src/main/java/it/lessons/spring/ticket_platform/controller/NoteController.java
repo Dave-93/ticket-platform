@@ -1,7 +1,6 @@
 package it.lessons.spring.ticket_platform.controller;
 import java.time.LocalDate;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,16 +24,17 @@ import jakarta.validation.Valid;
 @Controller
 @RequestMapping("/ticket")
 public class NoteController {
-
-    @Autowired
-    private NoteRepository noteRepository;
-
-    @Autowired
-    private TicketRepository ticketRepository;
-
-    @Autowired
-    private UserRepository userRepository;
     
+    private final NoteRepository noteRepository;
+    private final TicketRepository ticketRepository;
+    private final UserRepository userRepository;
+
+    public NoteController(NoteRepository noteRepository, TicketRepository ticketRepository, UserRepository userRepository){
+        this.ticketRepository = ticketRepository;
+        this.noteRepository = noteRepository;
+        this.userRepository = userRepository;
+    }
+
     /*Creazione Note*/
     @GetMapping("/{id}/note")
     public String addNote(@PathVariable Integer id, Model model){
