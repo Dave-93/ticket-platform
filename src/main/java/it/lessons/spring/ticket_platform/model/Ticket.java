@@ -29,12 +29,10 @@ public class Ticket {
     private String description;
 
     @NotBlank(message = "Stato del ticket obbligatorio")
-    //todo: col Pattern Limito i valori ammessi a quelli stabiliti nel "regexp"
+    //Con l'annotation Pattern Limito i valori ammessi a quelli stabiliti nel "regexp"
     @Pattern(regexp = "NEW|IN_PROGRESS|CLOSED", message = "Stato non valido")
     @Column(nullable = false, length = 15)
     private String ticketStatus;
-
-    //todo occorre il campo data_creazione??
 
     @ManyToOne
     @NotNull(message = "Operatore obbligatorio")
