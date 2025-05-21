@@ -38,7 +38,7 @@ public class TicketService {
     }
 
     //Cerca un ticket per id
-    public Optional<Ticket> getTicketById(Integer id) {
+    public Optional<Ticket> findTicketById(Integer id) {
         return ticketRepository.findById(id);
     }
 
@@ -55,5 +55,15 @@ public class TicketService {
             noteService.deleteNotesByTicket(ticket);//Cancella le note
             ticketRepository.delete(ticket);//Cancella il ticket
         }
+    }
+
+    //Cerca i ticket per categoria
+    public List<Ticket> findTicketByCategory(Integer categoryId) {
+        return ticketRepository.findByCategory_Id(categoryId);
+    }
+
+    //Cerca i ticket per stato
+    public List<Ticket> findTicketByStatus(String ticketStatus){
+        return ticketRepository.findByTicketStatusIgnoreCase(ticketStatus);
     }
 }

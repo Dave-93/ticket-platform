@@ -14,4 +14,10 @@ public interface TicketRepository extends JpaRepository<Ticket, Integer>{
     //Restituisce tutti i ticket associati ad un utente con uno specifico username
     List<Ticket> findByUser_Username(String username);
 
+    //Restituisce i ticke filtrati per categoria
+    List<Ticket> findByCategory_Id(Integer categoryId);
+
+    //Restituisce i ticke filtrati per stato
+    List<Ticket> findByTicketStatusIgnoreCase(String ticketStatus);
+
 }

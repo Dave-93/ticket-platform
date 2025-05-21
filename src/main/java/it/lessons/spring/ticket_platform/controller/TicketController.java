@@ -88,7 +88,7 @@ public class TicketController {
     /*Dettaglio ticket*/
     @GetMapping("/show/{id}")
     public String show(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        Optional<Ticket> optTicket =  ticketService.getTicketById(id);
+        Optional<Ticket> optTicket =  ticketService.findTicketById(id);
         if(optTicket.isPresent()){
             model.addAttribute("ticket", optTicket.get());
             return "/ticket/show";
@@ -101,7 +101,7 @@ public class TicketController {
     /*Modifica Ticket*/
     @GetMapping("/edit/{id}")
     public String edit(@PathVariable("id") Integer id, Model model, RedirectAttributes redirectAttributes){
-        Optional<Ticket> optTicket = ticketService.getTicketById(id);
+        Optional<Ticket> optTicket = ticketService.findTicketById(id);
         if (optTicket.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ticket non trovato");
             return "redirect:/ticket";
@@ -112,7 +112,7 @@ public class TicketController {
     }
     @PostMapping("/edit/{id}")
     public String update(@PathVariable("id") Integer id,@Valid @ModelAttribute("ticket") Ticket formTicket, BindingResult bindingResult, Model model,RedirectAttributes redirectAttributes){
-        Optional<Ticket> oldTicket = ticketService.getTicketById(id);
+        Optional<Ticket> oldTicket = ticketService.findTicketById(id);
         if (oldTicket.isEmpty()) {
             redirectAttributes.addFlashAttribute("errorMessage", "Ticket non trovato");
             return "redirect:/ticket";

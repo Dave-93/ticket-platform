@@ -2,6 +2,8 @@ package it.lessons.spring.ticket_platform.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -40,6 +42,7 @@ public class User {
     private List<Note>note;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Ticket>ticket;
 
     //Getter e Setter
