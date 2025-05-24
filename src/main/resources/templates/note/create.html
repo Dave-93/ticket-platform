@@ -2,7 +2,7 @@
  <html xmlns:th="http://www.thymeleaf.org">
  
     <head>
-        <div th:insert="fragment :: bootstrapCss"></div>
+        <div th:insert="fragment :: bootstrap-css"></div>
         <title>New Note</title>
     </head>
 
@@ -10,9 +10,10 @@
         <div class="container">
 
             <div th:insert="fragment :: navbar"></div>
+            <div th:insert="fragment :: font-body"></div>
 
             <h1 class="text-center my-3 text-danger">Aggiungi una nuova nota</h1>
-            <form id="note-form" th:object="${note}" th:action="@{/ticket/note}" method="post" class="mx-auto col-8 text-center">
+            <form id="note-form" th:object="${note}" th:action="@{/ticket/note}" method="post" class="mx-auto col-8 text-center p-4 bg-white shadow rounded">
                 
                 <input type="hidden" th:field="*{ticket.id}"/>
                 <input type="hidden" th:field="*{noteDate}" />
@@ -32,6 +33,6 @@
             </form>
         </div>
         
-        <div th:insert="fragment :: bootstrapJS"></div>
+        <div th:insert="fragment :: bootstrap-JS"></div>
     </body>
  </html>

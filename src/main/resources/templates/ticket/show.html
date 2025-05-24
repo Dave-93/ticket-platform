@@ -2,13 +2,15 @@
  <html xmlns:th="http://www.thymeleaf.org">
  
     <head>
-        <div th:insert="fragment :: bootstrapCss"></div>
+        <div th:insert="fragment :: bootstrap-css"></div>
         <title>Dettaglio Ticket</title>
     </head>
 
     <body>
         <div class="container" th:object="${ticket}">
+            
             <div th:insert="fragment :: navbar"></div>
+            <div th:insert="fragment :: font-body"></div>
 
             <h1 class="text-center my-3 text-danger">Dettagli ticket</h1>
             <div class="row justify-content-center">
@@ -36,9 +38,8 @@
                     <div class="text-center">
                         <a class="btn btn-primary mb-3" th:href="@{|/ticket/${ticket.id}/note|}">
                             Aggiungi Nota
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4"/>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-pin-fill" viewBox="0 0 16 16">
+                                <path d="M4.146.146A.5.5 0 0 1 4.5 0h7a.5.5 0 0 1 .5.5c0 .68-.342 1.174-.646 1.479-.126.125-.25.224-.354.298v4.431l.078.048c.203.127.476.314.751.555C12.36 7.775 13 8.527 13 9.5a.5.5 0 0 1-.5.5h-4v4.5c0 .276-.224 1.5-.5 1.5s-.5-1.224-.5-1.5V10h-4a.5.5 0 0 1-.5-.5c0-.973.64-1.725 1.17-2.189A6 6 0 0 1 5 6.708V2.277a3 3 0 0 1-.354-.298C4.342 1.674 4 1.179 4 .5a.5.5 0 0 1 .146-.354"/>
                             </svg>
                         </a>
                     </div>
@@ -65,6 +66,6 @@
             </div>
         </div>
 
-        <div th:insert="fragment :: bootstrapJS"></div>
+        <div th:insert="fragment :: bootstrap-JS"></div>
     </body>
  </html>

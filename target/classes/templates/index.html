@@ -2,14 +2,15 @@
  <html xmlns:th="http://www.thymeleaf.org">
  
     <head>
-        <div th:insert="fragment :: bootstrapCss"></div>
-        <title>Supporto</title>
+        <div th:insert="fragment :: bootstrap-css"></div>
+        <title>Supporto CED</title>
     </head>
 
     <body>
         <div class="container">
 
             <div th:insert="fragment :: navbar"></div>
+            <div th:insert="fragment :: font-body"></div>
             
             <!-- Status Operator-->
             <form th:action="@{/modificaStato}" method="get" sec:authorize="hasAuthority('OPERATOR')" 
@@ -78,84 +79,63 @@
                     </div>
                 </th:block>
 
-                <table class="table col-8">
-                    <thead>
-                        <tr>
-                            <th class="text-center col-1">
-                                Id #
-                            </th>
-                            <th class="text-center col-2">
-                                Titolo
-                            </th>
-                            <th class="text-center col-3">
-                                Descrizione
-                            </th>
-                            <th class="text-center col-2">
-                                Categoria
-                            </th>
-                            <th class="text-center col-2">
-                                Stato Ticket
-                            </th>
-                            <th class="text-center col-2">
-                                Operatore
-                            </th>
-                            <th>
-                                <!-- spazio tasto dettaglio-->
-                            </th>
-                            <th>
-                                <!-- spazio tasto modifica-->
-                            </th>
-                            <th sec:authorize="hasAuthority('ADMIN')">
-                                <!-- spazio tasto cancellazione-->
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr th:each="ticket : ${list}">
-                            <td th:text="${ticket.id}" class="text-center align-middle">
-                            </td>
-                            <td th:text="${ticket.title}" class="text-center align-middle">
-                            </td>
-                            <td th:text="${ticket.description}" class="text-center align-middle">
-                            </td>
-                            <td th:text="${ticket.category.name}" class="text-center align-middle">
-                            </td>
-                            <td th:text="${ticket.ticketStatus}" class="text-center align-middle">
-                            </td>
-                            <td th:text="${ticket.user.username}" class="text-center align-middle">
-                            </td>
-                            <td class="px-1 align-middle text-center">
-                                <a class="btn btn-primary" th:href="@{|/ticket/show/${ticket.id}|}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-                                </a>
-                            </td>
-                            <td class="px-1 align-middle text-center">
-                                <a class="btn btn-primary" th:href="@{|/ticket/edit/${ticket.id}|}">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-pencil" viewBox="0 0 16 16">
-                                        <path
-                                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325" />
-                                    </svg>
-                                </a>
-                            </td>
-                            <td class="px-1 align-middle text-center" sec:authorize="hasAuthority('ADMIN')">
-                                <form action="#" th:action="@{'/ticket/delete/{id}'(id=${ticket.id})}" method="post">
-                                    <button class="btn btn-danger" type="submit" id="submitButton" onclick="return confirm('Sei sicuro?')">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
-                                        </svg>
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="col-12 col-xl-10 my-4 mx-auto bg-white shadow rounded">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-center">Id #</th>
+                                    <th class="text-center">Titolo</th>
+                                    <th class="text-center description-header">Descrizione</th>
+                                    <th class="text-center">Categoria</th>
+                                    <th class="text-center">Stato Ticket</th>
+                                    <th class="text-center">Operatore</th>
+                                    <th><!--spazio tasto dettaglio--></th>
+                                    <th><!--spazio tasto modifica--></th>
+                                    <th sec:authorize="hasAuthority('ADMIN')"><!--spazio tasto elimina--></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="ticket : ${list}">
+                                    <td th:text="${ticket.id}" class="text-center align-middle"></td>
+                                    <td th:text="${ticket.title}" class="text-center align-middle"></td>
+                                    <td th:text="${ticket.description}" class="description-cell"></td>
+                                    <td th:text="${ticket.category.name}" class="text-center align-middle"></td>
+                                    <td th:text="${ticket.ticketStatus}" class="text-center align-middle"></td>
+                                    <td th:text="${ticket.user.username}" class="text-center align-middle"></td>
+                                    <td class="px-1 align-middle text-center">
+                                         <a class="btn btn-primary d-inline-flex align-items-center justify-content-center p-2" style="min-width: 48px; height: 48px;" th:href="@{|/ticket/show/${ticket.id}|}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-info-lg fs-4" viewBox="0 0 16 16">
+                                                <path d="m9.708 6.075-3.024.379-.108.502.595.108c.387.093.464.232.38.619l-.975 4.577c-.255 1.183.14 1.74 1.067 1.74.72 0 1.554-.332 1.933-.789l.116-.549c-.263.232-.65.325-.905.325-.363 0-.494-.255-.402-.704zm.091-2.755a1.32 1.32 0 1 1-2.64 0 1.32 1.32 0 0 1 2.64 0"/>
+                                            </svg>
+                                        </a>
+                                    </td>
+                                    <td class="px-1 align-middle text-center">
+                                        <a class="btn btn-primary d-inline-flex align-items-center justify-content-center p-2" style="min-width: 48px; height: 48px;" th:href="@{|/ticket/edit/${ticket.id}|}">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-pen-fill" width="20" height="20" viewBox="0 0 16 16">
+                                                <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001"/>
+                                            </svg>
+                                        </a>
+                                    </td>
+                                    <td class="px-1 align-middle text-center" sec:authorize="hasAuthority('ADMIN')">
+                                        <form action="#" th:action="@{'/ticket/delete/{id}'(id=${ticket.id})}" method="post">
+                                            <button class="btn btn-danger d-inline-flex align-items-center justify-content-center p-2" style="min-width: 48px; height: 48px;" type="submit" id="submitButton" onclick="return confirm('Sei sicuro?')">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-trash3 fs-4" viewBox="0 0 16 16">
+                                                    <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                </div>
             </div>
 
         </div>
-        <div th:insert="fragment :: bootstrapJS"></div>
+        <div th:insert="fragment :: bootstrap-JS"></div>
 
     </body>
  </html>

@@ -2,18 +2,19 @@
  <html xmlns:th="http://www.thymeleaf.org">
  
     <head>
-        <div th:insert="fragment :: bootstrapCss"></div>
-        <title>Update Ticket</title>
+        <div th:insert="fragment :: bootstrap-css"></div>
+        <title>Modifica Ticket</title>
     </head>
 
     <body>
         <div class="container">
 
             <div th:insert="fragment :: navbar"></div>
+            <div th:insert="fragment :: font-body"></div>
 
             <h1 class="text-center my-3 text-danger">Modifica il ticket selezionato</h1>
 
-            <form id="ticket-form" th:object="${ticket}" th:action="@{|/ticket/edit/${ticket.id}}" method="post" class="mx-auto col-8 text-center">
+            <form id="ticket-form" th:object="${ticket}" th:action="@{|/ticket/edit/${ticket.id}}" method="post" class="mx-auto col-8 text-center p-4 bg-white shadow rounded">
                 <div class="mb-3">
                     <label for="title" class="form-label fw-bold fs-5">Titolo</label>
                     <input type="text" class="form-control" id="title" th:field="*{title}" th:errorClass="is-invalid">
@@ -69,7 +70,7 @@
             </form>
 
         </div>
-        <div th:insert="fragment :: bootstrapJS"></div>
+        <div th:insert="fragment :: bootstrap-JS"></div>
 
     </body>
  </html>

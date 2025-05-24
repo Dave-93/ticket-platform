@@ -2,17 +2,24 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Fragments</title>
+    </head>
 
-        <div th:fragment="bootstrapCss">
+    <body>
+        <div th:fragment="bootstrap-css">
             <!-- Required meta tags -->
             <meta charset="utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1">
             <!-- Bootstrap CSS -->
             <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/5.1.3/css/bootstrap.min.css}"/>
+            <!-- Google Fonts: Poppins -->
+            <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet" />
         </div>
-    </head>
 
-    <body>
+        <div th:fragment="font-body">
+            <!--Uso Font-->
+            <body class="bg-light" style="font-family: 'Poppins', sans-serif;"></body>
+        </div>
+
         <div th:fragment="navbar">
             <nav class="navbar border-bottom border-body" data-bs-theme="dark">
                 <div class="container-fluid d-flex justify-content-between">
@@ -21,24 +28,32 @@
                     </div>                   
                     <div class="gap-1">
                         <a th:href="@{/ticket/create}" class="btn btn-success" sec:authorize="hasAuthority('ADMIN')">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
+                            New Ticket
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
                                 <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                            </svg>New Ticket
+                            </svg>
                         </a>
 
                         <a th:href="@{/}" class="btn btn-primary">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-house" viewBox="0 0 16 16">
-                                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L2 8.207V13.5A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5V8.207l.646.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293zM13 7.207V13.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V7.207l5-5z"/>
-                            </svg> Home
+                            Home
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-house-fill" viewBox="0 0 16 16">
+                                <path d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z"/>
+                                <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z"/>
+                            </svg>
                         </a>
 
-                        <a class="btn btn-danger" href="/logout">LOGOUT</a>
+                        <a class="btn btn-danger" href="/logout">
+                            LOGOUT
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-door-closed-fill" viewBox="0 0 16 16">
+                                <path d="M12 1a1 1 0 0 1 1 1v13h1.5a.5.5 0 0 1 0 1h-13a.5.5 0 0 1 0-1H3V2a1 1 0 0 1 1-1zm-2 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2"/>
+                            </svg>
+                        </a>
                     </div>
                 </div>
             </nav>
         </div>
 
-        <div th:fragment="bootstrapJS">
+        <div th:fragment="bootstrap-JS">
             <script th:src="@{/webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js}"></script>
         </div>
     </body>
