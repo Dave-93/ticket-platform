@@ -65,12 +65,19 @@ public class TicketController {
 
     /*Creazione Ticket*/
     @GetMapping("/create")
-    public String addTicket(Model model) {
+    public String addTicket(Model model, RedirectAttributes redirectAttributes) {
+        List<User> operatoriDisponibili = userService.findAvailableOperators();
+        //Controllo su operatori disponibili
+        if (operatoriDisponibili.isEmpty()) {
+            redirectAttributes.addFlashAttribute("errorMessage", "Nessun operatore disponibile! Impossibile creare un nuovo ticket.");
+            return "redirect:/ticket";
+        }
+
         Ticket newTicket = new Ticket();//Inizializzo l'oggetto
         model.addAttribute("ticket", newTicket);
         newTicket.setTicketStatus("NEW");//Imposto la selezione del radio di default
         model.addAttribute("categories", categoryRepository.findAll());//visualizzo la lista
-        model.addAttribute("users", userService.findAvailableOperators());//visualizzo gli operatori disponibili
+        model.addAttribute("users", operatoriDisponibili);//visualizzo gli operatori disponibili
         return "ticket/create";
     }
     @PostMapping("/create")
@@ -120,7 +127,6 @@ public class TicketController {
         formTicket.setUser(oldTicket.get().getUser());//riprende l'user esistente
         if (bindingResult.hasErrors()) {
             model.addAttribute("categories", categoryRepository.findAll());
-            model.addAttribute("users", userService.findAllUsers()); 
             return "/ticket/edit";
         }
         ticketService.saveTicket(formTicket);

@@ -49,7 +49,6 @@
                     <label for="ticketStatus" class="form-label fw-bold fs-5">Stato del Ticket</label><br>
                     <input type="radio" th:field="*{ticketStatus}" value="NEW" id="status1" 
                         th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">
-                        <!--espressione ternaria. In thymeleaf dove la condizione falsa può essere omessa->
                     <label for="status1">New</label>
                     <input type="radio" th:field="*{ticketStatus}" value="IN_PROGRESS" id="status2"
                         th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">

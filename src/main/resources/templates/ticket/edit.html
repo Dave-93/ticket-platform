@@ -46,19 +46,14 @@
                     <label for="ticketStatus" class="form-label fw-bold fs-5">Stato del Ticket</label><br>
                     <input type="radio" th:field="*{ticketStatus}" value="NEW" id="status1" 
                         th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">
-                        <!--espressione ternaria. In thymeleaf dove la condizione falsa può essere omessa-->
+                        <!--espressione ternaria. In thymeleaf la condizione falsa può essere omessa-->
                     <label for="status1">New</label>
                     <input type="radio" th:field="*{ticketStatus}" value="IN_PROGRESS" id="status2"
                         th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">
                     <label for="status2">In progress</label>
                     <input type="radio" th:field="*{ticketStatus}" value="CLOSED" id="status3"
                         th:classappend="${#fields.hasErrors('ticketStatus')} ? 'is-invalid'">
-                    <label for="status3">Closed</label>
-                    <!-- Gestione dell'errore non più necessaria, impostando un radio di default-->
-                        <ul th:if="${#fields.hasErrors('ticketStatus')}">
-                            <li th:each="err : ${#fields.errors('ticketStatus')}" class="text-danger text-start" th:text="${err}"></li>
-                        </ul>
-                    
+                    <label for="status3">Closed</label>                    
                 </div>
 
                 <input type="hidden" th:field="*{user.id}"/>
