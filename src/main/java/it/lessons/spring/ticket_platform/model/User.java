@@ -39,6 +39,7 @@ public class User {
     private List<Role> roles;
     
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Note>note;
 
     @OneToMany(mappedBy = "user")
