@@ -2,7 +2,6 @@ package it.lessons.spring.ticket_platform.controller;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -21,9 +20,9 @@ public class UserController {
     }
 
     @GetMapping("/modificaStato")
-    public String modificaStato(Authentication authentication, Model model, RedirectAttributes redirectAttributes){
+    public String modificaStato(Authentication authentication, RedirectAttributes redirectAttributes){
         String username = authentication.getName();//Recupero lo username dell'utente loggato
-        //Recupero i ticket dell’utente
+        //Verifico se l'utente esiste
         User user = userService.findByUsername(username).orElse(null);
         if (user == null) {
             redirectAttributes.addFlashAttribute("errorStatusMessage", "Utente non trovato");
